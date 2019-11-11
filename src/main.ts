@@ -4,10 +4,10 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import VueMqtt from 'vue-mqtt';
+import VueMqtt from 'vue-mqtt'
 
 Vue.config.productionTip = false
-Vue.use(VueMqtt, 'ws://mqtt.labict.be:1884');
+Vue.use(VueMqtt, 'ws://mqtt.labict.be:1884')
 
 new Vue({
   router,
