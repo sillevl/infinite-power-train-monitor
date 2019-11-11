@@ -50,16 +50,23 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <div id="chart">
+        <apexchart ref="realtimeChart" type=line :options="chartOptions" :series="series" />
+      </div>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
+import VueApexCharts from 'vue-apexcharts'
 
 export default {
   name: 'home',
   components: {
+    apexchart: VueApexCharts
   },
 
   data: () => ({
@@ -68,7 +75,52 @@ export default {
     input_current: 0,
     input_power: 0,
     output_current: 0,
-    output_power: 0
+    output_power: 0,
+
+    series: [{
+      data: []
+    }],
+
+    chartOptions: {
+      chart: {
+        animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+            speed: 1000
+          }
+        },
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        },
+        width: '100px'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime'
+        // range: 1000
+      },
+      yaxis: {
+        max: 100,
+        min: 20,
+        decimalsInFloat: 0
+      },
+      legend: {
+        show: false
+      }
+    }
   }),
 
   mounted () {
@@ -83,6 +135,9 @@ export default {
       let data = JSON.parse(json)
       this.$data.temperature = (data.temperature).toFixed(1)
       // console.log(data)
+
+      this.$data.series[0].data.push({ x: new Date(), y: data.temperature })
+      this.$refs.realtimeChart.updateSeries([{ data: this.$data.series[0].data }])
     },
     'infinite-train/power-in': function (message) {
       let json = (new TextDecoder('utf-8').decode(message))
@@ -109,3 +164,10 @@ export default {
   // }
 }
 </script>
+
+<style lang="css" scoped>
+#chart {
+  width: 100%;
+  min-height: 500px;
+}
+</style>
