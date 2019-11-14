@@ -7,7 +7,7 @@ import vuetify from './plugins/vuetify'
 import VueMqtt from 'vue-mqtt'
 
 Vue.config.productionTip = false
-Vue.use(VueMqtt, 'ws://mqtt.labict.be:1884')
+Vue.use(VueMqtt, 'wss://mqtt.devbit.be')
 
 new Vue({
   router,
