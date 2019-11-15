@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title>Input current</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{input_current}}A
+            {{input_current}}<span class="display-1">A</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -13,7 +13,7 @@
         <v-card>
           <v-card-title>Input power</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{input_power}}W
+            {{input_power}}<span class="display-1">W</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -21,7 +21,7 @@
         <v-card>
           <v-card-title>Voltage</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{voltage}}V
+            {{voltage}}<span class="display-1">V</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -29,7 +29,7 @@
         <v-card>
           <v-card-title>Temperature</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{temperature}}°C
+            {{temperature}}<span class="display-1">°C</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -37,7 +37,7 @@
         <v-card>
           <v-card-title>Output current</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{output_current}}A
+            {{output_current}}<span class="display-1">A</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -45,7 +45,7 @@
         <v-card>
           <v-card-title>Output power</v-card-title>
           <v-card-text class="display-2 text-center">
-            {{output_power}}W
+            {{output_power}}<span class="display-1">W</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -87,16 +87,16 @@ export default {
     'infinite-train/power-in': function (message) {
       let json = (new TextDecoder('utf-8').decode(message))
       let data = JSON.parse(json)
-      this.$data.voltage = Math.round(data['load-voltage'] * 100) / 100
-      this.$data.input_current = (data.current / 1000).toFixed(3)
-      this.$data.input_power = (data.power / 1000).toFixed(3)
+      this.$data.voltage = (data['load-voltage']).toFixed(1)
+      this.$data.input_current = (data.current / 1000).toFixed(1)
+      this.$data.input_power = (data.power / 1000).toFixed(1)
       // console.log(data)
     },
     'infinite-train/power-out': function (message) {
       let json = (new TextDecoder('utf-8').decode(message))
       let data = JSON.parse(json)
-      this.$data.output_current = (data.current / 1000).toFixed(3)
-      this.$data.output_power = (data.power / 1000).toFixed(3)
+      this.$data.output_current = (data.current / 1000).toFixed(1)
+      this.$data.output_power = (data.power / 1000).toFixed(1)
       // console.log(data)
     }
   }

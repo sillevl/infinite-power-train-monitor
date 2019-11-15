@@ -14,7 +14,7 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn href="https://github.com/sillevl/infinite-power-train-monitor" icon>
         <v-icon>mdi-github-circle</v-icon>
       </v-btn>
 
