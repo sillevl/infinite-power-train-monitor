@@ -1,54 +1,12 @@
 <template>
   <v-container>
     <v-row>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Input current</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{input_current}}<span class="display-1">A</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Input power</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{input_power}}<span class="display-1">W</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Voltage</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{voltage}}<span class="display-1">V</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Temperature</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{temperature}}<span class="display-1">°C</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Output current</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{output_current}}<span class="display-1">A</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col sm="6" md="4" lg="2">
-        <v-card>
-          <v-card-title>Output power</v-card-title>
-          <v-card-text class="display-2 text-center">
-            {{output_power}}<span class="display-1">W</span>
-          </v-card-text>
-        </v-card>
-      </v-col>
+      <Panel title="Voltage" :value="voltage" unit="V" />
+      <Panel title="Input current" :value="input_current" unit="A" />
+      <Panel title="Input power" :value="input_power" unit="W" />
+      <Panel title="Temperature" :value="temperature" unit="°C" />
+      <Panel title="Output current" :value="output_current" unit="A" />
+      <Panel title="Output power" :value="output_power" unit="W" />
     </v-row>
     <v-row>
       <Chart></Chart>
@@ -57,14 +15,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 import Chart from '@/components/Chart'
+import Panel from '@/components/Panel'
 
 export default {
   name: 'home',
   components: {
-    Chart
+    Chart,
+    Panel
   },
 
   data: () => ({
@@ -73,11 +31,7 @@ export default {
     input_current: 0,
     input_power: 0,
     output_current: 0,
-    output_power: 0,
-
-    series: [{
-      data: []
-    }]
+    output_power: 0
   }),
 
   mounted () {
@@ -93,7 +47,7 @@ export default {
       this.$data.temperature = (data.temperature).toFixed(1)
       // console.log(data)
 
-      this.$data.series[0].data.push({ x: new Date(), y: data.temperature })
+      // this.$data.series[0].data.push({ x: new Date(), y: data.temperature })
       // this.$refs.realtimeChart.updateSeries([{ data: this.$data.series[0].data }])
     },
     'infinite-train/power-in': function (message) {
