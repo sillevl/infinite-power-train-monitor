@@ -51,9 +51,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <div id="chart">
-        <apexchart ref="realtimeChart" type=line :options="chartOptions" :series="series" />
-      </div>
+      <Chart></Chart>
     </v-row>
   </v-container>
 </template>
@@ -61,12 +59,12 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import VueApexCharts from 'vue-apexcharts'
+import Chart from '@/components/Chart'
 
 export default {
   name: 'home',
   components: {
-    apexchart: VueApexCharts
+    Chart
   },
 
   data: () => ({
@@ -79,48 +77,7 @@ export default {
 
     series: [{
       data: []
-    }],
-
-    chartOptions: {
-      chart: {
-        animations: {
-          enabled: true,
-          easing: 'linear',
-          dynamicAnimation: {
-            speed: 1000
-          }
-        },
-        toolbar: {
-          show: false
-        },
-        zoom: {
-          enabled: false
-        },
-        width: '100px'
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-
-      markers: {
-        size: 0
-      },
-      xaxis: {
-        type: 'datetime'
-        // range: 1000
-      },
-      yaxis: {
-        max: 100,
-        min: 20,
-        decimalsInFloat: 0
-      },
-      legend: {
-        show: false
-      }
-    }
+    }]
   }),
 
   mounted () {
@@ -137,7 +94,7 @@ export default {
       // console.log(data)
 
       this.$data.series[0].data.push({ x: new Date(), y: data.temperature })
-      this.$refs.realtimeChart.updateSeries([{ data: this.$data.series[0].data }])
+      // this.$refs.realtimeChart.updateSeries([{ data: this.$data.series[0].data }])
     },
     'infinite-train/power-in': function (message) {
       let json = (new TextDecoder('utf-8').decode(message))
@@ -155,19 +112,5 @@ export default {
       // console.log(data)
     }
   }
-  // mqtt: {
-  //   [topic]: function(message) {        // when a message arrives on our topic
-  //     let json = (new TextDecoder("utf-8").decode(message))    // we need to convert (decode) the byte information to a text string
-  //     let data = JSON.parse(json)       // parse the JSON format to an object
-  //     this.$data.weather = data         //
-  //   }
-  // }
 }
 </script>
-
-<style lang="css" scoped>
-#chart {
-  width: 100%;
-  min-height: 500px;
-}
-</style>
