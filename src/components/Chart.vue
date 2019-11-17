@@ -1,9 +1,12 @@
 <template>
-  <v-container>
-    <div id="chart">
-      <apexchart ref="realtimeChart" type=line :options="chartOptions" :series="series" />
+    <div id="chart" md="6">
+      <apexchart
+        ref="realtimeChart"
+        type=line
+        :options="chartOptions"
+        :series="series"
+      />
     </div>
-  </v-container>
 </template>
 
 <script lang="ts">
@@ -15,10 +18,8 @@ export default Vue.extend({
   components: {
     apexchart: VueApexCharts
   },
+  props: ['series'],
   data: () => ({
-    series: [{
-      data: []
-    }],
     chartOptions: {
       chart: {
         animations: {
@@ -29,43 +30,105 @@ export default Vue.extend({
           }
         },
         toolbar: {
-          show: false
+          autoSelected: 'zoom'
         },
         zoom: {
-          enabled: false
+          type: 'x',
+          enabled: true,
+          autoScaleYaxis: true
         },
-        width: '100px'
-      },
-      dataLabels: {
-        enabled: false
+        width: 100,
+        height: 100
       },
       stroke: {
-        curve: 'smooth'
-      },
-
-      markers: {
-        size: 0
+        width: [2, 2, 1, 2, 2, 1],
+        dashArray: [0, 0, 5, 0, 0, 5]
       },
       xaxis: {
         type: 'datetime'
         // range: 1000
       },
-      yaxis: {
-        max: 100,
-        min: 20,
-        decimalsInFloat: 0
-      },
-      legend: {
-        show: false
-      }
+      yaxis: [
+        {
+          seriesName: 'Temperature',
+          opposite: true,
+          max: 70,
+          min: 0,
+          decimalsInFloat: 0,
+          legend: {
+            show: true
+          }
+        },
+        {
+          seriesName: 'Input current',
+          max: 5,
+          min: 0,
+          decimalsInFloat: 1,
+          legend: {
+            show: true
+          }
+        },
+        {
+          seriesName: 'Input power',
+          opposite: true,
+          max: 30,
+          min: 0,
+          decimalsInFloat: 0,
+          legend: {
+            show: true
+          }
+        },
+        {
+          seriesName: 'Voltage',
+          max: 10,
+          min: 0,
+          decimalsInFloat: 0,
+          legend: {
+            show: true
+          }
+        },
+        {
+          seriesName: 'Output current',
+          max: 2,
+          min: 0,
+          decimalsInFloat: 0,
+          show: false,
+          legend: {
+            show: false
+          }
+        },
+        {
+          seriesName: 'Output power',
+          opposite: true,
+          show: false,
+          max: 30,
+          min: 0,
+          decimalsInFloat: 0,
+          legend: {
+            show: false
+          }
+        }
+      ]
     }
-  })
+  }),
+  mounted: function () {
+    this.intervals()
+  },
+  methods: {
+    intervals: function () {
+      const self = this
+      window.setInterval(function () {
+        self.$refs.realtimeChart.updateSeries(self.$props.series)
+      }, 1000)
+    }
+  }
 })
 </script>
 
 <style lang="css" scoped>
-#chart {
+#chart, apexchart {
   width: 100%;
-  min-height: 500px;
+  min-height: 100px;
+  max-height: 200px;
 }
 </style>
