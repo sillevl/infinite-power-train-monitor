@@ -3,6 +3,7 @@
       <apexchart
         ref="realtimeChart"
         type=line
+        height=800
         :options="chartOptions"
         :series="series"
       />
@@ -37,8 +38,8 @@ export default Vue.extend({
           enabled: true,
           autoScaleYaxis: true
         },
-        width: 100,
-        height: 100
+        width: 10,
+        height: 10
       },
       stroke: {
         width: [2, 2, 1, 2, 2, 1],
@@ -128,7 +129,6 @@ export default Vue.extend({
 <style lang="css" scoped>
 #chart, apexchart {
   width: 100%;
-  min-height: 100px;
-  max-height: 200px;
+  height: 100px;
 }
 </style>
