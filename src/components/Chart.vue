@@ -118,7 +118,7 @@ export default Vue.extend({
     intervals: function () {
       const self = this
       window.setInterval(function () {
-        self.$refs.realtimeChart.updateSeries(self.$props.series)
+        (self.$refs.realtimeChart as any).updateSeries(self.$props.series)
       }, 1000)
     }
   }
